@@ -40,11 +40,18 @@ StartupWMClass=Firefox Developer Edition" > /usr/share/applications/${file}.desk
 chmod +x /usr/share/applications/${file}.desktop
 #Add firefox dev edition to favorites
 echo "Adding to favorites..."
-gsettings set org.gnome.shell favorite-apps "$(gsettings get org.gnome.shell favorite-apps | sed s/.$//), '${file}.desktop']"
+favorites=$(gsettings get org.gnome.shell favorite-apps)
+gsettings set org.gnome.shell favorite-apps "${favorites::-1}, '${file}.desktop']"
 #Navigate back to home directory
 cd ~
 
 echo "Firefox Developer edition installation complete"
+read -p "Do you want to delete this script [Y/n]: " i
+if [ ${i:-y} != n ]
+then
+  rm -rf `basename "$0"`
+fi
 
+echo "Installation courtesy of MikhaD"
 
 
