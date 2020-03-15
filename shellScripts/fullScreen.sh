@@ -12,6 +12,16 @@ then
 	echo "Click on 'Devices' at the top of the virtual machine window"
 	echo "Click the 'Insert Guest Additions CD Image' option at the bottom"
 	echo "Click run on the box that pops up, enter your password and click Authenticate"
+	echo "Click Devices>Optical Drives>Remove disk from virtual drive"
+	echo ""
+	echo "Press Right CTRL+F to enter and exit fullscreen mode"
+	read -p "Do you want to delete this script [Y/n]" i
+	if [ ${i:-y} != n ]
+	then
+		rm -rf fullScreen.sh		
+	fi
+	clear
+	echo "Full Screen courtesy of MikhaD"
 elif [ $1 = -h ]
 then
 	clear
