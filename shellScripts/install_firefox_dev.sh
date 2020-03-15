@@ -3,8 +3,12 @@
 ffVersion="75.0b3"
 file=${1:-firefox_dev}
 
-#Remove regular firefox to avoid conflicts
-sudo apt remove firefox > /dev/null
+read -p "Remove regular firefox [y/N]: " i
+if [ ${i:-n} != y ]
+then  
+  echo "Removing regular firefox..."
+  sudo apt-get remove firefox > /dev/null
+fi
 #Navigate to /opt dir where firefox will be installed
 cd /opt
 #Download tar archive
