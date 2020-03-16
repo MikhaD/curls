@@ -6,22 +6,25 @@ cd ~
 temp=temp${RANDOM}
 mkdir $temp
 cd $temp
-wget https://download-installer.cdn.mozilla.net/pub/devedition/releases/
+wget https://download-installer.cdn.mozilla.net/pub/devedition/releases/ > /dev/null
 
+function ver() {
 tac index.html | while read line
 do
 	if [[ $line =~ "href=" ]]
 	then
 		line=${line%%'/</a'*}
-		version=${line#*'/">'*}
+		echo ${line#*'/">'*}
 		break
 	fi
 done
+}
+version=$(ver $1)
 
 file=${1:-firefox_dev}
 
-read -p "Remove regular firefox [y/N]: " i
-if [ ${i:-n} != y ]
+read -p "Remove regular firefox [y/N]: "
+if [ ${REPLY:-n} = y ]
 then  
   echo "Removing regular firefox..."
   sudo apt-get remove firefox > /dev/null
@@ -64,12 +67,10 @@ cd ~
 rm -rf $temp
 
 echo "Firefox Developer edition installation complete"
-read -p "Do you want to delete this script [Y/n]: " i
-if [ ${i:-y} != n ]
+read -p "Do you want to delete this script [Y/n]: "
+if [ ${REPLY:-y} != n ]
 then
   rm -rf `basename "$0"`
 fi
 
 echo "Installation courtesy of MikhaD"
-
-
