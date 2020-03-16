@@ -176,7 +176,14 @@ clear
 read -p "Change desktop background [Y/n]: "
 if [ ${REPLY:-y} = y ]
 then
-	cd ~/.local/share/backgrounds
+	cd ~/.local/share
+	if [ -d backgrounds ]
+	then
+		cd backgrounds
+	else
+		mkdir backgrounds
+		cd backgrounds
+	fi
 	wget https://wallpapercave.com/wp/WbXooCc.png
 	if [ $? = 0 ]
 	then
