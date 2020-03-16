@@ -27,13 +27,16 @@ read -p "Remove regular firefox [y/N]: "
 if [ ${REPLY:-n} = y ]
 then  
   echo "Removing regular firefox..."
-  sudo apt-get remove firefox > /dev/null
+  sudo apt-get remove firefox
+  clear
+  echo "Regular firefox removed"
 fi
 #Navigate to /opt dir where firefox will be installed
 cd /opt
 #Download tar archive
 echo "Downloading Firefox Dev Edition..."
 wget https://download-installer.cdn.mozilla.net/pub/devedition/releases/${version}/linux-x86_64/en-US/firefox-${version}.tar.bz2 > /dev/null
+clear
 #Extract tar archive
 echo "Extracting..."
 tar xvf firefox-${version}.tar.bz2 > /dev/null
