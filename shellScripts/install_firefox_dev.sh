@@ -1,6 +1,23 @@
 #!/usr/bin/env bash
 
-ffVersion="75.0b3"
+clear
+
+cd ~
+temp=temp${RANDOM}
+mkdir $temp
+cd $temp
+wget https://download-installer.cdn.mozilla.net/pub/devedition/releases/
+
+tac index.html | while read line
+do
+	if [[ $line =~ "href=" ]]
+	then
+		line=${line%%'/</a'*}
+		version=${line#*'/">'*}
+		break
+	fi
+done
+
 file=${1:-firefox_dev}
 
 read -p "Remove regular firefox [y/N]: " i
@@ -13,12 +30,12 @@ fi
 cd /opt
 #Download tar archive
 echo "Downloading Firefox Dev Edition..."
-wget https://download-installer.cdn.mozilla.net/pub/devedition/releases/${ffVersion}/linux-x86_64/en-US/firefox-${ffVersion}.tar.bz2 > /dev/null
+wget https://download-installer.cdn.mozilla.net/pub/devedition/releases/${version}/linux-x86_64/en-US/firefox-${version}.tar.bz2 > /dev/null
 #Extract tar archive
 echo "Extracting..."
-tar xvf firefox-${ffVersion}.tar.bz2 > /dev/null
+tar xvf firefox-${version}.tar.bz2 > /dev/null
 #Delete tar archive
-rm firefox-${ffVersion}.tar.bz2 > /dev/null
+rm firefox-${version}.tar.bz2 > /dev/null
 #Change name of extracted dir from firefox to firefox_dev
 mv firefox $file > /dev/null
 #Create link so user can run firefox
@@ -29,7 +46,7 @@ touch /usr/share/applications/${file}.desktop
 echo "[Desktop Entry]
 Name=Firefox Dev Edition
 GenericName=Firefox Developer Edition
-Exec=/usr/local/bin/${file} %u
+Exec=/usr/local/bin/${file}
 Terminal=false
 Icon=/opt/${file}/browser/chrome/icons/default/default128.png
 Type=Application
@@ -44,6 +61,7 @@ favorites=$(gsettings get org.gnome.shell favorite-apps)
 gsettings set org.gnome.shell favorite-apps "${favorites::-1}, '${file}.desktop']"
 #Navigate back to home directory
 cd ~
+rm -rf $temp
 
 echo "Firefox Developer edition installation complete"
 read -p "Do you want to delete this script [Y/n]: " i
