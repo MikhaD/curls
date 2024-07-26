@@ -52,6 +52,6 @@ Categories=Network;WebBrowser;WebDevelopment;
 MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;
 StartupWMClass=Firefox Developer Edition
 Terminal=false
-SartupNotify=true" > /usr/share/applications/firefox-aurora.desktop
+StartupNotify=true" > /usr/share/applications/firefox-aurora.desktop
 
 echo "Installation complete"
